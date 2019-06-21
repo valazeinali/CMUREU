@@ -5,7 +5,7 @@ array = []
 
 outcsv = csv.writer(open("vizPR.csv","w"))
 outcsv.writerow(["open","effort","label"])
-s = pd.date_range('2010-01', '2019-07', freq='1M')  # DatetimeIndex
+s = pd.date_range('2014-02', '2019-07', freq='1M')  # DatetimeIndex
 pd.Series(1, index=s).resample('M', how='count')
 
 validlabels = [
@@ -86,7 +86,7 @@ for m in s:
 	countbymonth[n]['Unlabeled'] = 0
 	countbymonth[n]['Multi'] = 0
 
-with open('NewBinWranglerScript.csv','rt')as f:
+with open('BinWrangleforScript.csv','rt')as f:
   data = csv.reader(f)
   for row in data: 
        array = row
@@ -104,7 +104,7 @@ with open('NewBinWranglerScript.csv','rt')as f:
        		label = 'Unlabeled'
        else:
        		label = 'Multi'
-       #print(row)
+       print(row)
        countbymonth[str(row[0])[0:7]][label] += int(row[1])
 
 months = countbymonth.keys()
