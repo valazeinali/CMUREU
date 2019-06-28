@@ -7,7 +7,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib
 
-status = []
+old_status = []
+new_status = []
 
 
 new_count = 0 
@@ -114,10 +115,10 @@ for row in csv.DictReader(open("/Users/valazeinali/Desktop/New Stuff CMU/newbie_
 	prs = row["prs"].split(",") # getting pull request number(s)
 
 	if time != first_action: # comparing the commit time and authors first action
-		status = "old" # they are classified "old" if they have commited in a year that is not the year they made thier "first_action"
+		old_status = "old" # they are classified "old" if they have commited in a year that is not the year they made thier "first_action"
 	else:
-		status = "new" # they are classified "new" if they have commited in a year that is not the year they made thier "first_action"
-	#print(labels)
+		new_status = "new" # they are classified "new" if they have commited in a year that is not the year they made thier "first_action"
+	#print(old_status, new_status)
 
 	#print(actor,time,labels,first_action,team,effort,prs,status)
 	#print(status)
@@ -147,7 +148,24 @@ for row in csv.DictReader(open("/Users/valazeinali/Desktop/New Stuff CMU/newbie_
 				#print(label)
 			else:
 				label = 'Unlabeled'
-			print(label,status)
+			print(label,old_status,new_status)
+		outcsvv = csv.writer(open("2010.csv","w"))
+
+		for i in new_status:
+			new_count+=1
+		for j in old_status:
+			old_count+=1
+
+		#print(new_count)
+		#print(old_count)
+		#length = len(row)
+
+		if old_status == "[]": ## replace the values that are "[]" with an old object or new object 
+			old_status = "old"
+		if new_status == "[]":
+			new_status = "new"
+
+		outcsvv.writerow([label,old_status,old_count/3,new_status,new_count/3]) # we divide by 3 here because thats the length of the array, we could do new_count/row.len(), but it wasn't working so its hard coded. This legth will differ for each year
 		#for i in status:
 			#if i in status == "new":
 				#new_count = new_count + 1
