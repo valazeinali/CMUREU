@@ -26,7 +26,6 @@ validlabels = [
 'A-NLL',
 'A-allocators',
 'A-amusing',
-'A-x86_64',
 'A-frontend',
 'A-lang',
 'A-associated-items',
@@ -60,7 +59,6 @@ validlabels = [
 'A-dragonflybsd',
 'A-macros',
 'A-openbsd',
-'A-macros-1.2',
 'A-mir',
 'A-hir',
 'A-parser',
@@ -90,19 +88,14 @@ validlabels = [
 'T-rustdoc'
 ]
 validlabels.sort() # to sort the labels
-'''
-########################################
-countbyyear= dict()
-for y in s:
-	n = str(y)[0:4]
-	countbyyear[n] = dict()
-	for l in validlabels:
-		countbyyear[n][l] = 0
-		countbyyear[n]['Unlabeled'] = 0
-########################################
-countbyyear= dict()
-'''
+
+counts = dict()
+for label in validlabels:
+	counts[label] = {'new': 0, 'old': 0}
+counts['Unlabeled'] = {'new': 0, 'old': 0}
+
 for row in csv.DictReader(open("/Users/valazeinali/Desktop/New Stuff CMU/newbie_activity.csv")):
+
 
 	actor = row["actor"]
 	temp = row["time"] # only getting the year from when author makes a commit
@@ -114,112 +107,29 @@ for row in csv.DictReader(open("/Users/valazeinali/Desktop/New Stuff CMU/newbie_
 	effort = (int(row["insertions"]) + int(row["deletions"])) # total amount of effort put into the commit 
 	prs = row["prs"].split(",") # getting pull request number(s)
 
+
+
 	if time != first_action: # comparing the commit time and authors first action
-		old_status = "old" # they are classified "old" if they have commited in a year that is not the year they made thier "first_action"
+		status = "old" # they are classified "old" if they have commited in a year that is not the year they made thier "first_action"
 	else:
-		new_status = "new" # they are classified "new" if they have commited in a year that is not the year they made thier "first_action"
-	#print(old_status, new_status)
-
-	#print(actor,time,labels,first_action,team,effort,prs,status)
-	#print(status)
-	#if status != "old": # not really important
-		#new_count = new_count + 1
-	#else:
-		#old_count = old_count + 1
-
-	if time == "2010":
-
-		rowlabels = set()
-		## create a dict for new and for old
-		## create a data structire that hold 
-		## Below is desired table
-		#          | Label | New | Old.|
-		#          |-------------------|
-		#          | A-xyz  |  3 | 1   |
-		#          | A-BCA  |  5 | 1   |
-		#          | T-JKL  |  5 | 3   |
-		for label in labels:
-			if label in validlabels:
-				rowlabels.add(label)
-			if len(rowlabels) == 1:
-				label = rowlabels[0]
-			elif len(rowlabels) == 0:
-				label = 'Unlabeled'
-				#print(label)
-			else:
-				label = 'Unlabeled'
-			print(label,old_status,new_status)
-		outcsvv = csv.writer(open("2010.csv","w"))
-
-		for i in new_status:
-			new_count+=1
-		for j in old_status:
-			old_count+=1
-
-		#print(new_count)
-		#print(old_count)
-		#length = len(row)
-
-		if old_status == "[]": ## replace the values that are "[]" with an old object or new object 
-			old_status = "old"
-		if new_status == "[]":
-			new_status = "new"
-
-		outcsvv.writerow([label,old_status,old_count/3,new_status,new_count/3]) # we divide by 3 here because thats the length of the array, we could do new_count/row.len(), but it wasn't working so its hard coded. This legth will differ for each year
-		#for i in status:
-			#if i in status == "new":
-				#new_count = new_count + 1
-				#print(new_count)
-			#elif i in status != "new":
-				#old_count = old_count + 1
-			#else:
-				#new_count = 0
-				#old_count = 0
-
-		#outcsvv = csv.writer(open("2010.csv","w"))
-		#outcsvv.writerow([label,status,new_count/3,"old::",old_count])
-'''
-			for labellist in label:
-				for statuslist in status:
-				
-
-				
-			#print(countbyyear[label][oldstatus][newstatus])
-
-	##print(actor,time,labels,first_action,team,effort,prs,status)
-
-	#outcsv.writerow([actor,time,labels,first_action,team,effort,status])
-
-	#print(actor,time,labels,first_action,team,effort,prs,status)
-	#print("# new: ",new_count,"# Old: ",old_count)
-	#print((new_count/old_count)*100)
+		status = "new" # they are classified "new" if they have commited in a year that is not the year they made thier "first_action"
 	
-	for y in s: 
-		n = str(y)[0:4]
-		countbyyear[n] = dict()
-		for l in validlabels:
-			countbyyear[n][l] = 0
-		countbyyear[n]['Unlabeled'] = 0
 
-		rowlabels = set()
+	if time == "2010": # change this to the year you want eg., 2010,2011,2012,2013
 
+		validrowlabels = set()		
+
+		nolabels = True
 		for label in labels:
 			if label in validlabels:
-				rowlabels.add(label)
-		if len(rowlabels) == 1:
-			for l in rowlabels:
-				label = l
-		elif len(rowlabels) == 0:
-			label = 'Unlabeled'
-		else:
-			label = l
+				nolabels = False
+				counts[label][status] += 1
 
+		if nolabels:
+			counts['Unlabeled'][status] += 1
 
-		#countbymonth[str(row[2])[0:4][label][status] += int[effort]
-	years = countbyyear.keys()
-	#months.sort()
-	sorted(years)
-
-	outcsv = csv.writer(open("vizPR111.csv","w"))
-	outcsv.writerow(years)
-	'''
+outcsvv = csv.writer(open("2014.csv","w"))
+outcsvv.writerow(['label','new','old'])
+outcsvv.writerow(['Unlabeled',counts['Unlabeled']['new'],counts['Unlabeled']['old']])
+for label in validlabels:
+	outcsvv.writerow([label,counts[label]['new'],counts[label]['old']])
