@@ -75,7 +75,8 @@ validlabels = [
 'T-lang',
 'T-libs',
 'T-release',
-'T-rustdoc'
+'T-rustdoc',
+'E-easy'
 ]
 validlabels.sort() # to sort the labels
 
@@ -84,7 +85,7 @@ for label in validlabels:
 	counts[label] = {'new': 0, 'old': 0}
 counts['Unlabeled'] = {'new': 0, 'old': 0}
 
-outcsvv = csv.writer(open("2019.csv","w"))
+outcsvv = csv.writer(open("2009.csv","w"))
 outcsvv.writerow(['label','new','old'])
 
 for row in csv.DictReader(open("/Users/valazeinali/Desktop/New Stuff CMU/newbie_activity.csv")):
@@ -108,7 +109,7 @@ for row in csv.DictReader(open("/Users/valazeinali/Desktop/New Stuff CMU/newbie_
 		status = "new" # they are classified "new" if they have commited in a year that is not the year they made thier "first_action"
 	
 
-	if time == "2019": # change this to the year you want eg., 2010,2011,2012,2013
+	if time == "2017": # change this to the year you want eg., 2010,2011,2012,2013
 
 		validrowlabels = set()		
 
