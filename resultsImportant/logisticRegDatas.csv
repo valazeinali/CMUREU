@@ -1,0 +1,14 @@
+﻿Multinomial Logistic Regression - Data Summary,,,,Multinomial Logistic Regression,,,,,Alpha,0.05,,,R-square,,,Significance Test,
+,low effort,high effort,,Reference Variable,,0,,,,,,,,,,,
+survived in year 2,0,1,,,,,,,,,,,LL,-6.225980892,,LL,-6.225980892
+0,1635,87,,1,,,,,,,,,LL0,-65.27570341,,LL0,-65.27570341
+1,334,102,,,coeff,s.e.,Wald,p-value,exp(b),lower,upper,,R-sq (L),0.092161261,,Chi-square,118.099445
+,,,,intercept,-2.933489965,0.110026695,710.8419936,0,0.053211009,,,,R-sq (CS),0.053255803,,df,1
+confusion matrix?,,,,survived in year 2,1.747321785,0.157809402,122.5970549,0,5.739211233,4.212351495,7.819514971,,R-sq (N),0.118932682,,p-value,0
+,,,,,,,,,,,,,AIC,1167.344017,,# iter,20
+,,,,,,,,,,,,,BIC,1178.697891,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+if you put low effort ,,,,,,,,,,,,,,,,,
