@@ -1,4 +1,4 @@
-ID,SUM(additions),SUM(deletions),SUM(num_easy_y1),year,status
+ID,additions,deletions,num_easy_y1,year,status
 1,1,1,0,2010,new
 2,73,27,0,2010,new
 3,3,1,0,2011,new
